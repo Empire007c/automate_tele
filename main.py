@@ -2,7 +2,8 @@ import json
 import os
 from flask import Flask, request, jsonify
 from keep_alive import keep_alive  # Import the keep_alive function
-
+# Call keep_alive() to keep the Replit instance running
+keep_alive()
 app = Flask(__name__)
 
 # Path to the JSON file
@@ -51,9 +52,6 @@ def check_user(userid):
         user = new_user
 
     return jsonify(user)
-
-# Call keep_alive() to keep the Replit instance running
-keep_alive()
 
 if __name__ == '__main__':
     app.run(debug=False, host='0.0.0.0', port=8080)
