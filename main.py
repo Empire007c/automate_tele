@@ -90,7 +90,7 @@ def user_update(userid, data):
     return jsonify(user)
 
 
-@app.route('/clear/users_data', methods=['POST'])
+@app.route('/clear/users_data', methods=['GET'])
 def clear_users():
     # Overwrite the file with an empty list to clear all users
     with open(JSON_FILE, 'w') as f:
