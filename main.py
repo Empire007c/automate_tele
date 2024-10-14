@@ -55,7 +55,7 @@ def check_user(userid):
         save_users(users)
         user = new_user
 
-    return jsonify(user,6878766)
+    return jsonify(user)
 
 @app.route('/<userid>/<data>', methods=['GET'])
 def user_update(userid, data):
@@ -77,7 +77,7 @@ def user_update(userid, data):
     coco_stl = int(data["coco_stl"][2:])  # Extract the level number
 
     coco_touches = round((((coco_stl-1) * coco_storage_incre) + coco_initial_storage) / ((coco_ml-1) + coco_initial_multitap))
-    coco_delay = (coco_touches)
+    coco_delay = ((coco_stl-1) * coco_storage_incre)
 
     # Update the user data
     user["coco"]["delay"] = coco_delay
