@@ -55,7 +55,7 @@ def check_user(userid):
         save_users(users)
         user = new_user
 
-    return jsonify(user)
+    return jsonify(user,6878766)
 
 @app.route('/<userid>/<data>', methods=['GET'])
 def user_update(userid, data):
