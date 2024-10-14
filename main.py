@@ -98,6 +98,13 @@ def clear_users():
     
     return jsonify({"message": "All users have been cleared."}), 200
     
+@app.route('get/users_data', methods=['GET'])
+def get_users():
+    #load users
+    users = load_users()
+    return jsonify(users)
+    
+
 
 if __name__ == '__main__':
     app.run(debug=False)
