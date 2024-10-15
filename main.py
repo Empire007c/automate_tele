@@ -39,7 +39,8 @@ def find_user_by_id(users, userid):
         if user["id"] == userid:
             return user
     return None
-
+    
+@app.route('/update', methods=['GET
 # Function to update the coco delay by reducing 60 continuously every 60 seconds
 def update_coco_delay():
     try:
@@ -58,7 +59,8 @@ def update_coco_delay():
             print(users)
 
             # Wait for 60 seconds before the next update
-            time.sleep(60)
+            #time.sleep(60)
+            return "updated"
     except Exception as e:
         print(f"Error: {e}")
 
