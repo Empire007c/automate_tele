@@ -48,7 +48,7 @@ def update_coco_delay():
             users = load_users()
             for user in users:
                 if user['coco']['delay'] is not None and isinstance(user['coco']['delay'], (int, float)):
-                    user['coco']['delay'] -= 60
+                    user['coco']['delay'] -= 60*10
 
                     # If delay is less than or equal to 0, set it to True
                     if user['coco']['delay'] <= 0:
