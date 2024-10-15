@@ -55,6 +55,7 @@ def update_coco_delay():
 
             # Write the updated data back to the file
             save_users(users)
+            print(users)
 
             # Wait for 60 seconds before the next update
             time.sleep(60)
