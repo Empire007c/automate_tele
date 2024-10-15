@@ -1,9 +1,12 @@
 import json
 import os
+import time
+import threading
 from flask import Flask, request, jsonify
 
 app = Flask(__name__)
 
+# Initial settings for coco
 coco_initial_storage = 1000
 coco_initial_multitap =  4
 coco_storage_incre = 500
@@ -36,6 +39,27 @@ def find_user_by_id(users, userid):
         if user["id"] == userid:
             return user
     return None
+
+# Function to update the coco delay by reducing 60 continuously every 60 seconds
+def update_coco_delay():
+    try:
+        while True:
+            users = load_users()
+            for user in users:
+                if user['coco']['delay'] is not None and isinstance(user['coco']['delay'], (int, float)):
+                    user['coco']['delay'] -= 60
+
+                    # If delay is less than or equal to 0, set it to True
+                    if user['coco']['delay'] <= 0:
+                        user['coco']['delay'] = True
+
+            # Write the updated data back to the file
+            save_users(users)
+
+            # Wait for 60 seconds before the next update
+            time.sleep(60)
+    except Exception as e:
+        print(f"Error: {e}")
 
 @app.route('/<userid>', methods=['GET'])
 def check_user(userid):
@@ -86,9 +110,7 @@ def user_update(userid, data):
     # Save updated users list
     save_users(users)
 
-    #return jsonify({"id": userid, "coco": {"delay": coco_delay, "touches": coco_touches}})
     return jsonify(user)
-
 
 @app.route('/clear/users_data', methods=['GET'])
 def clear_users():
@@ -97,14 +119,18 @@ def clear_users():
         json.dump([], f, indent=4)
     
     return jsonify({"message": "All users have been cleared."}), 200
-    
+
 @app.route('/get/users_data', methods=['GET'])
 def get_users():
-    #load users
+    # Load users
     users = load_users()
     return jsonify(users)
-    
-
 
 if __name__ == '__main__':
+    # Run the update_coco_delay in a separate thread
+    delay_thread = threading.Thread(target=update_coco_delay)
+    delay_thread.daemon = True  # Daemon thread will stop when the main program exits
+    delay_thread.start()
+
+    # Run the Flask app
     app.run(debug=False)
