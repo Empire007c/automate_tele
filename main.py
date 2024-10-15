@@ -130,10 +130,7 @@ def get_users():
     return jsonify(users)
 
 if __name__ == '__main__':
-    # Run the update_coco_delay in a separate thread
-    delay_thread = threading.Thread(target=update_coco_delay)
-    delay_thread.daemon = True  # Daemon thread will stop when the main program exits
-    delay_thread.start()
+    
 
     # Run the Flask app
     app.run(debug=False)
