@@ -11,6 +11,8 @@ coco_initial_storage = 1000
 coco_initial_multitap =  4
 coco_storage_incre = 500
 coco_multitap_incre = 1
+#server delay for eliminates user if not any activity under 1 hour
+server_delay=60*60
 
 # Path to the JSON file
 JSON_FILE = 'users.json'
@@ -53,13 +55,17 @@ def update_coco_delay():
                     # If delay is less than or equal to 0, set it to True
                     if user['coco']['delay'] <= 0:
                         user['coco']['delay'] = True
+                if user['server'] is not None and isinstance(user['server'], (int, float)):
+                    user['server'] -= 60*10
+
+                    # If delay is less than or equal to 0, set it to True
+                    if user['server'] <= 0:
+                        users.remove(user)
 
             # Write the updated data back to the file
             save_users(users)
             print(users)
-
-            # Wait for 60 seconds before the next update
-            #time.sleep(60)
+            
             return "updated"
     except Exception as e:
         print(f"Error: {e}")
@@ -77,11 +83,15 @@ def check_user(userid):
             "id": userid,
             "coco": {"delay":None,"touches":None},
             "sd": {"delay":None,"touches":None},
+            "server":server_delay
         }
         users.append(new_user)
         save_users(users)
         user = new_user
-
+    # If user get request after register,server_delay reset
+    if user:
+        user["server"]=server_delay
+        
     return jsonify(user)
 
 @app.route('/<userid>/<data>', methods=['GET'])
