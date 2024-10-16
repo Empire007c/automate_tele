@@ -64,9 +64,9 @@ def update_coco_delay():
 
             # Write the updated data back to the file
             save_users(users)
-            print(users)
             
-            return "updated"
+            
+            return 200
     except Exception as e:
         print(f"Error: {e}")
 
