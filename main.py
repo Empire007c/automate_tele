@@ -54,7 +54,7 @@ def update_coco_delay():
 
                     # If delay is less than or equal to 0, set it to True
                     if user['coco']['delay'] <= 0:
-                        user['coco']['delay'] = True
+                        user['coco']['delay'] = "True"
                 if user['server'] is not None and isinstance(user['server'], (int, float)):
                     user['server'] -= 60*10
 
@@ -81,8 +81,8 @@ def check_user(userid):
     if not user:
         new_user = {  
             "id": userid,
-            "coco": {"delay":None,"touches":None},
-            "sd": {"delay":None,"touches":None},
+            "coco": {"delay":"None","touches":"None"},
+            "sd": {"delay":"None","touches":"None"},
             "server":server_delay
         }
         users.append(new_user)
