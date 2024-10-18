@@ -12,7 +12,7 @@ coco_initial_multitap =  4
 coco_storage_incre = 500
 coco_multitap_incre = 1
 #server delay for eliminates user if not any activity under 1 hour
-server_delay=60*60
+server_delay=4500
 
 # Path to the JSON file
 JSON_FILE = 'users.json'
