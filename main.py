@@ -64,11 +64,12 @@ def update_coco_delay():
 
             # Write the updated data back to the file
             save_users(users)
+            return jsonify({"status": "success"}), 200
             
             
-            return 200
     except Exception as e:
         print(f"Error: {e}")
+        return jsonify({"error": str(e)}), 500
 
 @app.route('/<userid>', methods=['GET'])
 def check_user(userid):
